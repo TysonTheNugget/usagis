@@ -181,7 +181,7 @@ def generate_simple_fight_code(background, body, boost, mouth, eyes, face, mappi
 
 
 def get_random_images():
-    base_dir = 'C:\\Users\\Administrator\\Desktop\\usagis'
+    base_dir = 'base_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.')'
     layer_dirs = [
         'Layer1',
         ['Layer2/Body1', 'Layer2/Body2', 'Layer2/Body3', 'Layer2/Body4'],
