@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Randomizer</title>
+    <script>
+    function randomizeImage() {
+        fetch('/randomize', {
+            method: 'POST'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            console.log("Debug: Received fightCode:", data.imageInfo.fightCode);             
+            if(data.imageUrl) {
+                let uniqueTimestamp = new Date().getTime();
+                document.getElementById('randomImage').src = data.imageUrl + '?' + uniqueTimestamp;
+            }
+            // Update the traits and information
+           document.getElementById('imageInfo').textContent = "Background: " + data.imageInfo.background +
+"\nBody: " + data.imageInfo.body + "\nBoost: " + data.imageInfo.boost + "\nMouth: " + data.imageInfo.mouth +
+"\nEyes: " + data.imageInfo.eyes + "\nFace: " + data.imageInfo.face + "\nBUN$/PB holdings: " + data.imageInfo.holdings +
+"\nATK: " + data.imageInfo.atk + " DEF: " + data.imageInfo.def + " SPEED: " + data.imageInfo.speed + " HP: +" + data.imageInfo.hp +
+"\nEffect: " + data.imageInfo.effect;
+
+            // ---- START: New line to display the fight code ----
+            document.getElementById('imageInfo').textContent += "\nFight Code: " + data.imageInfo.fightCode;
+            // ---- END: New line to display the fight code ----
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error.message);
+        });
+    }
+    </script>
+</head>
+<body>
+    <button onclick="randomizeImage()">Randomize</button>
+    <img id="randomImage" src="/static/default.png" alt="Random Image" width="315" height="240">
+    <pre id="imageInfo">Traits will appear here.</pre>
+    <!-- No changes needed in the body -->
+</body>
+</html>
